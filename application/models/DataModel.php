@@ -835,4 +835,121 @@ class DataModel extends CI_Model {
         $query = $this->db->query("SELECT DISTINCT(LRNO), BookingDate, Place, Cosigner, Consignee, Qty, InvoiceNo, StatementNo FROM vtcpod where StatementNo = '$data' order by LRNO");
         return $query->result_array();
     } 
+    public function selectlrconsigner1($term,$userdepo,$Consigner,$d1,$d2,$Depot)
+    {
+        $query = $this->db->query("SELECT `LRNO` FROM `vtcpod` WHERE StatementNo='' and Uploaded = 1 and Verified = 1 and `Cosigner`='$Consigner' AND 
+        DRSNO LIKE '%$userdepo%' and LRNO LIKE '%$term%' and BookingDate>='$d1' and BookingDate<='$d2' and LRNO LIKE '%$Depot%' LIMIT 0,10");
+        return $query->result_array();
+    }
+    public function getdatastatement($LRNO,$Depot,$Consigner,$d1,$d2,$userdepo)
+    {
+        try{
+        $sql = $this->db->query("
+        SELECT DISTINCT(LRNO), BookingDate 
+        FROM vtcpod 
+        WHERE StatementNo = '' 
+            AND Uploaded = 1 
+            AND Verified = 1 
+            AND LRNO = ? 
+            AND Cosigner = ? 
+            AND DRSNO LIKE ? 
+            AND LRNO LIKE ? 
+            AND BookingDate > ? 
+            AND BookingDate < ?
+            ", array($LRNO, $Consigner, '%' . $userdepo . '%', '%' . $Depot . '%', $d1, $d2));
+    
+    // $query_str = $this->db->last_query();
+    // echo "Executed Query: " . $query_str;
+    
+        $query=$sql->result();
+        return $query;
+    }
+    catch (\Exception $e) {
+        log_message('error', $e->getMessage());
+        return [];
+    }
+
+    }
+    public function fetch_vehnum($term)
+    {
+        $query = $this->db->query("SELECT `Vehicle_No` FROM `Vehicle` WHERE `Vehicle_No` LIKE '%$term%' LIMIT 0,10");
+        return $query->result_array();
+    }
+    public function fetch_vehichpre()
+    {
+        $sql=$this->db->query("SELECT `JobId`, `Vehicle`, `JobDate`, `ServiceType`, `VendorName`, `JobType`, `CurrentKM`, `SendDate`, `ReturnDate`, `pname`, 
+        `qty`, `rate`, `amount`, `LabourCost`, `MaintenanceCost`, `ExtraCost` FROM `PrepareJob`");
+          return $sql->result();
+    }
+    public function apidata()
+    {
+        $query = $this->db->query("SELECT * FROM `lr`");
+        return $query->result();
+    }
+    public function fetch_commission($d1, $d2)
+    {
+        $mergedResult = array(); // Initialize the merged result array
+
+        $sql = "SELECT t2.CPCODE, t2.NAME, t2.cpdeponame, COUNT(`LRNO`) as lr, 
+                    sum(`PkgsNo`) as pkg, sum(`ActualWeight`) as wt, sum(`DocketTotal`) as dt,
+                    (SELECT sum(`DocketTotal`) FROM `LR` WHERE Origin=t2.CPCODE AND `LRDate`>=(?) 
+                    AND `LRDate`<=(?) AND PayBasis='TO PAY' AND Status!=2) AS topayCount,
+                    (SELECT sum(`DocketTotal`) FROM `LR` WHERE Origin=t2.CPCODE AND `LRDate`>=(?) 
+                    AND `LRDate`<=(?) AND PayBasis='PAID' AND Status!=2) AS PAIDCOUNT 
+                FROM `LR` t1 
+                JOIN CPDEPO t2 ON t1.`Origin`=t2.CPCODE 
+                WHERE `LRDate`>=(?) AND `LRDate`<=(?) 
+                AND t1.Status<>'2' 
+                GROUP BY t2.CPCODE";
+        
+        $result = $this->db->query($sql, array($d1, $d2, $d1, $d2, $d1, $d2));
+        
+        if ($result->num_rows() > 0) {
+            foreach ($result->result_array() as $row) {
+                $cpcodenew = $row['CPCODE'];
+                $sql1 = "SELECT `LRNO`, `ActualWeight`, `LRDate`, `DocketTotal`, `ExcesswtCharge`, `FreightCharge`, `OtherCharge` 
+                        FROM `LR` 
+                        WHERE `LRDate` >= ? AND `LRDate` <= ? AND Origin = ? AND Status <> '2'";
+        
+                $result1 = $this->db->query($sql1, array($d1, $d2, $cpcodenew));
+        
+                if ($result1->num_rows() > 0) {
+                    $toatalcommision = 0; // Initialize the total commission
+                    
+                    foreach ($result1->result_array() as $row1) {
+                        // Process your data here
+                        $lrno = $row1['LRNO'];
+                        $ActualWeight = $row1['ActualWeight'];
+                        $lrdatenew = $row1['LRDate'];
+                        $docketTotal = $row1['DocketTotal'];
+                        $ExcesswtCharge = $row1['ExcesswtCharge'];
+                        $freightcharge = $row1['FreightCharge'];
+                        $OtherCharge = $row1['OtherCharge'];
+                        $NewDocketTotal1 = $ExcesswtCharge + $freightcharge;
+                        
+                        $sql2 = "SELECT `Rate` FROM `CPexcessweight` 
+                                 WHERE `CPcode` = ? AND (? BETWEEN `Fromdate` AND `Todate`) AND (? BETWEEN `FromWeight` AND `ToWeight`)";
+        
+                        $result2 = $this->db->query($sql2, array($cpcodenew, $lrdatenew, $ActualWeight));
+        
+                        if ($result2->num_rows() > 0) {
+                            $row2 = $result2->row();
+                            $Rate = $row2->Rate;
+                            $Rate1 = (int)$Rate / 100;
+                            $commision = $NewDocketTotal1 * $Rate1;
+                            $otherexpensee = $commision + $OtherCharge;  
+                            $toatalcommision += $otherexpensee;
+                        }
+                    }
+                    
+                    // Add the 'toatalcommision' to the $row array
+                    $row['toatalcommision'] = $toatalcommision;
+                    $mergedResult[] = $row;
+                }
+            }
+        }
+        
+        return $mergedResult;        
+        
+    }   
 }

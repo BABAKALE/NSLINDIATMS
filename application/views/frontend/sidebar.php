@@ -82,9 +82,9 @@
                   <li class="nav-item"> <a class="nav-link" href="Editselectlr">EDIT LR</a></li>
                   <li class="nav-item"> <a class="nav-link" href="SelectReturnlr">RETURN LR</a></li>
                   <li class="nav-item"> <a class="nav-link" href="Multiplelrprint">LR MULTIPLE PRINT</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="Loadingsheet">LOADINGSHEET</a></li>
                   <li class="nav-item"> <a class="nav-link" href="Createprn">CREATE PRN </a></li>
                   <li class="nav-item"> <a class="nav-link" href="fetchprnwise">ARRIVAL PRN </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="Loadingsheet">LOADINGSHEET</a></li>
                   <li class="nav-item"> <a class="nav-link" href="createdrs">CREATE DRS </a></li>
                   <li class="nav-item"> <a class="nav-link" href="register"> REGISTER </a></li>
                   <li class="nav-item"> <a class="nav-link" href="thcarrival"> THC ARRIVAL </a></li>
@@ -97,6 +97,7 @@
                   <li class="nav-item"> <a class="nav-link" href="customermaster">MASTER CUSTOMER</a></li>
                   <li class="nav-item"> <a class="nav-link" href="vendormaster">MASTER VENDOR</a></li>
                   <li class="nav-item"> <a class="nav-link" href="tripsheet">THRIPSHEET EXPENSES</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="PrepareJob">PREPARE JOB</a></li>
                   <li class="nav-item"> <a class="nav-link" href="locationmaster">MASTER LOCATION</a></li>
                   <li class="nav-item"> <a class="nav-link" href="citymaster">MASTER CITY</a></li>
                   <li class="nav-item"> <a class="nav-link" href="CreateDrsProfitApprovalForm">DRS APPROVAL FORM </a></li>
@@ -111,6 +112,9 @@
                   <li class="nav-item"> <a class="nav-link" href="THC_sales_register">THC SALES REGISTER</a></li>
                   <li class="nav-item"><a class="nav-link" href="ExcelLR">EXCEL UPLOAD</a></li>
                   <li class="nav-item"><a class="nav-link" href="Pageaccess">PAGE ACCESS</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="StatementBarcode">CREATE STATEMENT</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="cpcommision">CP COMMISION REPORT</a></li>
+                  
                 </ul>
               </div>
             </li>

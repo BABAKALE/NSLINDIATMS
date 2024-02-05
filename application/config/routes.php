@@ -337,16 +337,18 @@ $route['RetrunLrInsert'] = 'Lredit/RetrunLrInsert';
 $route['SearchlrnoReturn'] = 'Lredit/SearchlrnoReturn';
 $route['Loadingsheet'] = 'Lredit/Loadingsheet';
 $route['Viewloadingsheet'] = 'Lredit/Viewloadingsheet';
-$route['newjay1'] = 'Lredit/newjay1';
-$route['newjay'] = 'Lredit/newjay';
 $route['Multiplelrprint'] = 'Lredit/MultiLr';
 $route['SelectConsidata'] = 'Lredit/SelectConsidata';
 $route['Multiplelr'] = 'Lredit/Multiplelr';
 $route['lrlazer'] = 'Lredit/lrlazer';
-$route['createstate'] = 'Lredit/createstate';
 $route['SelectSatetment'] = 'Lredit/SelectSatetment';
 $route['Createstatement'] = 'Lredit/Createstatement';
-$route['VerifySattement'] = 'Lredit/VerifySattement';
+$route['StatementBarcode'] = 'Lredit/StatementBarcode';
+$route['PrepareJob'] = 'Lredit/PrepareJob';
+$route['createprejob'] = 'Lredit/createprejob';
+$route['PrepareJobReport'] = 'Lredit/PrepareJobReport';
+$route['cpcommision'] = 'Lredit/cpcommision';
+
 
 
 
