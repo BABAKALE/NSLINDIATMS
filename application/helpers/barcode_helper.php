@@ -25,3 +25,5 @@ function generate_barcode1($code, $type = 'CODE_128')
 
     return $barcode;
 }
+
+

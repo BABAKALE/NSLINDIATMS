@@ -86,8 +86,7 @@
 <table style='width:100%;border-collapse: collapse;' border=1><tr><td>
 	<table style='border-collapse: collapse;width:100%;font-size:0.73em;' border=1>
 	<tr>
-	<td rowspan="4"><?php if($rowgc =='0586')echo "<b>NORTHEN STAR LOGISTICS</b><br><img src='assets/images/northen_star_logo.png'  height='50'>";  ?></td>
-		 <td rowspan="4" width="40%"><b>CONSIGNMENT NOTE</b><br>H.O.: Vishal House,
+	<td rowspan="4"><b>NORTHERN STAR LOGISTICS</b><br><img src="assets_old/images/logo192.png" height='50'></td>		 <td rowspan="4" width="40%"><b>CONSIGNMENT NOTE</b><br>H.O.: Vishal House,
 		 Sr.No.166, Gajanan Nagar,<br> A/P:Fursungi, Tal: Haveli, Dist: Pune-412308. <br><?php if($rowgc =='0586') echo"CIN No: U60200PN2012PTC142997 <br> GST Code: 996511 PAN: BEIPA7237J"; else echo " CIN No: U60200PN2012PTC142997 <br> GST Code: 996511 PAN: AAECV0781E"; ?>
 		 <!-- CIN No: U60200PN2012PTC142997 <br> GST Code: 27BEIPA7237J3ZC PAN: BEIPA7237J -->
 		 </td>
