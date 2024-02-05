@@ -214,7 +214,7 @@ $datestr = $date->format('d-m-Y');
                         <br><br>
                         <div class="row">
                             <div class="col-sm" style="text-align: center;">
-                                <input type="submit" name="submit" id="submit" value="Save" class="btn btn-primary"><br><br>
+                                <input type="submit" name="submit" id="submit" value="Save" class="btn btn-outline-dark btn-fw"><br><br>
                                 <a href="PrepareJobReport"><b><h4>Show All!</h4></b></a>
                             </div>
                         </div>
