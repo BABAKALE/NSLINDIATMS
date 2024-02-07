@@ -65,11 +65,10 @@ public function generateMultipleBarcodes($selectedLRNOs)
 
 
 
-<<<<<<< HEAD
-}
-=======
+
+
         }
-// ==================================
+
  public function get_lr_data11($Consignor, $from, $to)
     {
         $this->db->select('lr.LRNO, lr.id, lr.LRDate, lr.LRDT, lr.ArriveDate, lr.FromPlace, lr.ToPlace, lr.PayBasis, lr.Consignor, lr.Consignee, lr.ConsigneeMar, lr.PkgsNo, lr.ActualWeight, lr.DocketTotal, lr.FRTRate, lr.Status, lr.InvoiceNo, lr.Origin, lr.CoastCenter, lr.Destination, lr.CurrentLocation, lr.NextLocation, lr.BookingType, lr.ConsignorId, lr.ConsigneeId, lr.FRTType, lr.DRS_THCNO, lr.ArriveQty, lr.CancelReason, lr.CancelDate, lr.CancelUser, lr.MOT, lr.ServiceType, lr.PickupDelType, lr.ConsigneeAdd, lr.ConsigneeAddMar, lr.ConsigneeMob, lr.DocCharge, lr.Hamali, lr.OtherCharge, lr.DoordelCharge, lr.ExcesswtCharge, lr.CSGSTRate, lr.CSGSTAmount, lr.CreatedBy, lr.FreightCharge, lr.BillingParty, lr.ConsignorAdd, lr.ConsignorMob, lr.EDD, lr.EWBNo, lr.EWBDate, lr.DeliveredQty, lr.Billgenerate, lr.DeliveryDate, lr.ReturnLR, lr.ManualLRNO, lr.LRedituser, lr.StatementNos, lr.LRHamalis, lr.Paidtype, lr.CPvaluesearch, lr.LSNO, lr.ManifestNo, lr.perbox');
@@ -78,7 +77,7 @@ public function generateMultipleBarcodes($selectedLRNOs)
         $this->db->where('lr.Consignor', $Consignor);
         $this->db->where('lr.LRDate BETWEEN "' . $from . '" AND "' . $to . '"', NULL, FALSE);
         $this->db->where('lr.Status !=', 2);
->>>>>>> bf5fc4eaf6ebcc8bb52d127dafbe255a58f3d1e3
+
 
         $query = $this->db->get();
         return $query->result();

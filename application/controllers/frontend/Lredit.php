@@ -4,8 +4,11 @@ require FCPATH . 'vendor/autoload.php';
 
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
-class Lredit extends CI_Controller {
-
+class Lredit extends CI_Controller {  
+    public function __construct(){
+        parent::__construct();
+        $this->load->model('DataModel');
+    }
     public function Editselectlr()
     {
 
@@ -26,7 +29,6 @@ class Lredit extends CI_Controller {
     }
     public function Editlr()
     {
-        $this->load->model('DataModel');
         $this->load->model('Auth_model');
 
       $data3['user'] = $this->Auth_model->user_data($this->session->userdata('user_id'));
@@ -45,7 +47,6 @@ class Lredit extends CI_Controller {
    
     public function fetch_data1()
     {
-        $this->load->model('DataModel');
         $conID = $this->input->post('ConID');
         $lrDate = $this->input->post('LRDate');
         $payType = $this->input->post('PayType');       
@@ -57,7 +58,6 @@ class Lredit extends CI_Controller {
     }
     public function fetch_dataEdit()
     {
-        $this->load->model('DataModel');
         $ContractID=$this->input->post('ContractID');
         $Qty=$this->input->post('Qty');
         $ToPlace=$this->input->post('ToPlace');
@@ -68,7 +68,6 @@ class Lredit extends CI_Controller {
 
 	public function checkcityEdit()
 	{
-	    $this->load->model('DataModel');
 	    $term = $this->input->get('term');
 	    $cityExists = $this->DataModel->checkcityEdit1($term);
 
@@ -80,7 +79,6 @@ class Lredit extends CI_Controller {
 	}
     public function update()
     {
-        $this->load->model('DataModel');
         $InvoiceNo=$this->input->post('invoiceno');
          if ($this->input->post('Consigneefrom') == "From Master") {
             $Consignee = $this->input->post('FMConsigneeName');
@@ -170,7 +168,6 @@ class Lredit extends CI_Controller {
     }
     public function SearchcustCode()
     {
-        $this->load->model('DataModel');
         $term = $this->input->get('term');
         $customers=$this->DataModel->fetchcustCode($term);
         $data = [];
@@ -183,7 +180,6 @@ class Lredit extends CI_Controller {
         echo json_encode($data);
     }
     public function FMConsignees1(){
-        $this->load->model('DataModel');
         $term=$this->input->get('term');
         $partyid=$this->input->get('partyid');
         $city=$this->input->get('city');
@@ -200,7 +196,6 @@ class Lredit extends CI_Controller {
     }
     public function CityName()
     {
-        $this->load->model('DataModel');
         $term=$this->input->get('term');
         $CityNamet=$this->DataModel->CityNameEng($term);
         $data = [];
@@ -214,7 +209,6 @@ class Lredit extends CI_Controller {
     }
         public function RetrunLr()
     {
-        $this->load->model('DataModel');
         $this->load->model('Auth_model');
 
       $data3['user'] = $this->Auth_model->user_data($this->session->userdata('user_id'));
@@ -232,7 +226,6 @@ class Lredit extends CI_Controller {
     }
         public function RetrunLrInsert()
     {       
-        $this->load->model('DataModel');
         $userdepo='PNA';
         $InvoiceNo=$this->input->post('invoiceno');
          if ($this->input->post('Consigneefrom') == "From Master") {
@@ -320,11 +313,11 @@ class Lredit extends CI_Controller {
         );
 
         $data=$this->DataModel->insertreturn($Updatedata,$InvoiceNo,$userdepo);
+        print_r($data);
 
     }
     public function SearchlrnoReturn()
     {
-        $this->load->model('DataModel');
         $this->load->model('Auth_model');
         $data = $this->Auth_model->user_data($this->session->userdata('user_id'));
         $userdepo=$data->Depot;
@@ -343,14 +336,12 @@ class Lredit extends CI_Controller {
     }
     public function depotse()
     {
-        $this->load->model('DataModel');
         $data=$this->DataModel->selectdepo();
         echo json_encode($data);
 
     }
     public function getlrdataJUNE()
     {
-        $this->load->model('DataModel');
         $lrno=$this->input->post('LRNO');
         $data=$this->DataModel->fetchgetlrdataJUNE($lrno);
         if (!empty($data)) {
@@ -374,7 +365,6 @@ class Lredit extends CI_Controller {
     {
         if ($this->input->is_ajax_request()) 
        {
-        $this->load->model('DataModel');
         $this->load->model('Auth_model');
         $data = $this->Auth_model->user_data($this->session->userdata('user_id'));
         $userdepot=$data->Depot;
@@ -390,7 +380,7 @@ class Lredit extends CI_Controller {
     {
         if ($this->input->is_ajax_request()) 
        {
-            $this->load->model('DataModel');
+
             $this->load->model('Auth_model');
             $data = $this->Auth_model->user_data($this->session->userdata('user_id'));
             $userdepot=$data->Depot;
@@ -405,7 +395,6 @@ class Lredit extends CI_Controller {
     public function Viewloadingsheet()
     {
         $this->load->model('Auth_model');
-        $this->load->model('DataModel');
         $data3['user'] = $this->Auth_model->user_data($this->session->userdata('user_id'));
         $LSNO = trim($this->input->get('Lsno'));
         $data['lrdata'] = $this->DataModel->viewlssearch($LSNO);
@@ -427,7 +416,6 @@ class Lredit extends CI_Controller {
     }
     public function fetchconsignor()
     {
-        $this->load->model('DataModel');
         $this->load->model('Auth_model');
         $userData = $this->Auth_model->user_data($this->session->userdata('user_id'));
         $userDepot = $userData->Depot;
@@ -438,7 +426,6 @@ class Lredit extends CI_Controller {
     }
     public function SelectConsidata()
     {
-        $this->load->model('DataModel');
         $this->load->model('Auth_model');
         $data['user'] = $this->Auth_model->user_data($this->session->userdata('user_id'));
         $depo = $data['user']->Depot;
@@ -450,7 +437,6 @@ class Lredit extends CI_Controller {
     }
     public function lrlazer()
     {
-        $this->load->model('DataModel');
         $LRNO = $_GET['LRNO'];
         $barcode = generate_barcode($LRNO);
         $imagePath = FCPATH . 'barcode.png';
@@ -470,7 +456,6 @@ class Lredit extends CI_Controller {
     }
     public function Multiplelr()
     {
-        $this->load->model('DataModel');
 
         if (!$this->input->post('Copies')) {
             exit("No LR Copies Selected.</body></html>");
@@ -490,17 +475,9 @@ class Lredit extends CI_Controller {
         ];
 
         $this->load->view('frontend/multilrlazer', $array);
-    }
-    public function createstate()
-    {
-        $this->load->model('Auth_model');
-        $data['user'] = $this->Auth_model->user_data($this->session->userdata('user_id'));
-        $this->load->view('frontend/Createstatement', $data);
-    }
-   
+    } 
    public function fetchconsignor1()
     {
-        $this->load->model('DataModel');
         $startDate = $this->input->get('startdate');
         $endDate = $this->input->get('enddate');
         $Depot=$this->input->get('Depot');
@@ -509,7 +486,6 @@ class Lredit extends CI_Controller {
     }
     public function SelectSatetment()
     {
-        $this->load->model('DataModel');
         $this->load->model('Auth_model');
         $data['user'] = $this->Auth_model->user_data($this->session->userdata('user_id'));
         $d1 = $this->input->post('startdate');
@@ -517,11 +493,10 @@ class Lredit extends CI_Controller {
         $Depot=$this->input->post('Depot');
         $Consigner=$this->input->post('Consigner');
         $data['Data']=$this->DataModel->datastatement($d1,$d2,$Depot,$Consigner);
-        $this->load->view('frontend/Createstatement', $data);
+        $this->load->view('frontend/StatementBarcode', $data);
     }
     public function Createstatement()
     {
-        $this->load->model('DataModel');
         $this->load->model('Auth_model');
         $data['user'] = $this->Auth_model->user_data($this->session->userdata('user_id'));
         $userdepo = $data['user']->Depot;
@@ -542,12 +517,149 @@ class Lredit extends CI_Controller {
  
        
     }
-    public function VerifySattement()
+    public function StatementBarcode()
     {
         $this->load->model('Auth_model');
         $data['user'] = $this->Auth_model->user_data($this->session->userdata('user_id'));
-        $this->load->view('frontend/VerifyStatement', $data);
+        $this->load->view('frontend/StatementBarcode', $data);
     }
- 
+    public function selectlrconsigner()
+    {
+        $this->load->model('Auth_model');
+        $data = $this->Auth_model->user_data($this->session->userdata('user_id'));
+        $userdepo=$data->Depot;
+        $term=$this->input->get('query');
+        $Consigner=$this->input->get('consigner');
+        $d1=$this->input->get('d1');
+        $d2=$this->input->get('d2');
+        $Depot=$this->input->get('Depot');
+        $data=$this->DataModel->selectlrconsigner1($term,$userdepo,$Consigner,$d1,$d2,$Depot);
+        echo json_encode($data);
+
+    }
+    public function getdatastatement()
+    {
+       $LRNO=$this->input->post('LRNO');
+       $Depot=$this->input->post('Depot');
+       $Consigner=$this->input->post('Consigner');
+       $this->load->model('Auth_model');
+       $data = $this->Auth_model->user_data($this->session->userdata('user_id'));
+       $userdepo=$data->Depot;
+       $d1=$this->input->post('d1');
+       $d2=$this->input->post('d2');
+       $data=$this->DataModel->getdatastatement($LRNO,$Depot,$Consigner,$d1,$d2,$userdepo);
+       if(!empty($data))
+       {
+        foreach ($data as $row) {
+            echo "<td><input type='hidden' name='LRNO[]' value='" . $row->LRNO . "'>" . $row->LRNO . "</td>";
+            echo "<td>" . $row->BookingDate . "</td>";
+          }
+       }
+        else {
+            echo "No Data."; // Handle if no data is found
+        }
+       
+
+    }
+    public function PrepareJob()
+    {
+        $this->load->model('Auth_model');
+        $data['user'] = $this->Auth_model->user_data($this->session->userdata('user_id'));
+        $this->load->view('frontend/PrepareJob', $data);
+    }
+    public function vehnum()
+    {
+        $term = $this->input->get('query');
+        $data=$this->DataModel->fetch_vehnum($term);
+        echo json_encode($data);
+
+    }
+    public function createprejob()
+    {
+        try{
+            $query = $this->db->query("
+            SELECT MAX(CAST(SUBSTRING(JobId, 6, 6) AS UNSIGNED)) StatMax FROM PrepareJob");
+        if ($query->num_rows() == 0) {
+            $id = 1;
+        } else {
+            $row = $query->row();
+            $maxValue = $row->StatMax;
+            $id = is_null($maxValue) ? 1 : $maxValue + 1;
+        } 
+        $joid = "JB" . str_pad($id, 6, 0, STR_PAD_LEFT);
+        $vno=$this->input->post('vno');
+        $jdt=$this->input->post('jdt');
+        $stype=$this->input->post('stype');
+        $vendor=$this->input->post('vendor');
+        $jtype=$this->input->post('jtype');
+        $km=$this->input->post('km');
+        $send=$this->input->post('send');
+        $return=$this->input->post('return');
+        $pnames=$this->input->post('pname');
+        $qtys=$this->input->post('Qty');
+        $rates=$this->input->post('rate');
+        $amounts=$this->input->post('amount');
+        $labour=$this->input->post('labour');
+        $maintenance=$this->input->post('maintenance');
+        $extra=$this->input->post('extra');
+        $success=true;
+        for ($i = 0; $i < count($pnames); $i++) {
+            $pname = $pnames[$i];
+            $qty = $qtys[$i];
+            $rate = $rates[$i];
+            $amount = $amounts[$i];
+            $s = "SELECT * FROM SparePart WHERE pname='$pname'";
+            $q = $this->db->query($s);
+            $row = $q->row();
+            $existingQty = $row->UpdatedQty;
+            $newUpdatedQty = $existingQty - $qty;
+            $this->db->trans_start();
+            $this->db->query("INSERT INTO PrepareJob (JobId, Vehicle, JobDate, ServiceType, VendorName, JobType, CurrentKM, SendDate, ReturnDate, pname, qty, rate, amount, LabourCost, MaintenanceCost, ExtraCost) VALUES 
+            ('$joid', '$vno', STR_TO_DATE('$jdt','%d-%m-%Y'), '$stype', '$vendor', '$jtype', '$km', STR_TO_DATE('$send','%d-%m-%Y'), STR_TO_DATE('$return','%d-%m-%Y'), '$pname', '$qty', '$rate', '$amount', '$labour', '$maintenance', '$extra')");
+            $this->db->query("UPDATE SparePart SET UpdatedQty = '$newUpdatedQty' WHERE pname='$pname'");
+            $this->db->trans_complete();
+                if ($this->db->trans_status() === FALSE) {
+                    $this->db->trans_rollback();
+                    $success = false; 
+                    throw new \Exception('Error inserting data into sapthcmaster');
+                } else {
+                    $this->db->trans_commit();
+                }
+                if ($success) {
+                    echo "Success! All data inserted successfully.";
+                } else {
+                    echo "Error! Some data failed to insert.";
+                }
+            }
+        }
+        catch (\Exception $e) {
+            $this->db->transRollback();
+            log_message('error', $e->getMessage());
+            throw new \Exception('Error inserting data into loadingthc and updating LSNO in Lr');
+        }
+        $this->load->model('Auth_model');
+        $data['user'] = $this->Auth_model->user_data($this->session->userdata('user_id'));
+        $data['data'] = $this->DataModel->fetch_vehichpre();
+        $this->load->view('frontend/PrepareJobReport', $data);
+        
+    }
+    public function PrepareJobReport()
+    {
+        $this->load->model('Auth_model');
+        $data['user'] = $this->Auth_model->user_data($this->session->userdata('user_id'));
+        $data['data'] = $this->DataModel->fetch_vehichpre();
+        $this->load->view('frontend/PrepareJobReport', $data);
+    }
+
+    public function cpcommision()
+    {
+        $this->load->model('Auth_model');
+        $data['user'] = $this->Auth_model->user_data($this->session->userdata('user_id'));
+        $d1=$this->input->post('startdate');
+        $d2=$this->input->post('enddate');
+        $data['Data'] = $this->DataModel->fetch_commission($d1,$d2);
+        $this->load->view('frontend/cpcommision', $data);
+    }
+
 
 }
